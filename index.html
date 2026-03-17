@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="theme-color" content="#4E1B28"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<title>Jordan J. Adlam & Jacqueline M. Kenny — September 18, 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --burgundy:       #6B2737;
+    --burgundy-deep:  #4E1B28;
+    --burgundy-mid:   #7E3347;
+    --blush:          #F2D6D9;
+    --blush-light:    #FAF0F1;
+    --blush-mid:      #E8BEC3;
+    --cream:          #FAF6EE;
+    --cream-warm:     #F5EDE0;
+    --gold:           #C9A96E;
+    --gold-light:     #DEC08A;
+    --gold-pale:      #EDD9B0;
+    --charcoal:       #2C2020;
+    --mid:            #5C3D42;
+    --rule:           #DBC4C8;
+    --light-rule:     #EDD9DC;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--charcoal);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* paper texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.5;
+  }
+
+  /* ── NAV ───────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 900;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.1rem 2rem;
+    background: rgba(250, 246, 238, 0.94);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--light-rule);
+    transition: box-shadow 0.4s;
+    gap: 0;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  nav a {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  nav a:hover { color: var(--burgundy); }
+
+  nav .monogram {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--burgundy);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    margin: 0 2rem;
+  }
+
+  /* ── HERO ──────────────────────────────────── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 9rem 2rem 6rem;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, var(--cream) 0%, var(--blush-light) 60%, #F0D8DC 100%);
+  }
+
+  /* petal blush circles */
+  #hero::after {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(242,214,217,0.45) 0%, transparent 70%);
+    top: -100px; right: -150px;
+    pointer-events: none;
+  }
+
+  .hero-corner {
+    position: absolute;
+    width: 80px; height: 80px;
+    border-color: rgba(201,169,110,0.4);
+    border-style: solid;
+  }
+  .hc-tl { top: 6.5rem; left: 2.5rem; border-width: 1px 0 0 1px; }
+  .hc-tr { top: 6.5rem; right: 2.5rem; border-width: 1px 1px 0 0; }
+  .hc-bl { bottom: 2.5rem; left: 2.5rem; border-width: 0 0 1px 1px; }
+  .hc-br { bottom: 2.5rem; right: 2.5rem; border-width: 0 1px 1px 0; }
+
+  .hero-rule {
+    width: 1px; height: 70px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    margin: 0 auto 2.5rem;
+    animation: fadeDown 1.4s ease forwards; opacity: 0;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    animation: fadeUp 1s ease 0.3s forwards; opacity: 0;
+  }
+
+  .hero-names {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3.2rem, 8.5vw, 7rem);
+    line-height: 1.02;
+    color: var(--burgundy-deep);
+    letter-spacing: -0.01em;
+    animation: fadeUp 1s ease 0.5s forwards; opacity: 0;
+  }
+
+  .hero-amp {
+    display: block;
+    font-size: 0.45em;
+    font-style: italic;
+    color: var(--gold);
+    margin: 0.25em 0;
+  }
+
+  .hero-date {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-top: 2.5rem;
+    animation: fadeUp 1s ease 0.7s forwards; opacity: 0;
+  }
+
+  .hero-ornament {
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    animation: fadeUp 1s ease 0.9s forwards; opacity: 0;
+  }
+  .hero-ornament span { display: block; width: 55px; height: 1px; background: var(--rule); }
+  .hero-ornament svg { width: 16px; height: 16px; fill: var(--blush-mid); }
+
+  .hero-location {
+    font-family: 'Cinzel', serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-top: 1.4rem;
+    animation: fadeUp 1s ease 1.05s forwards; opacity: 0;
+  }
+
+  /* ── COUNTDOWN ─────────────────────────────── */
+  #countdown {
+    background: var(--burgundy-deep);
+    padding: 4.5rem 2rem;
+    text-align: center;
+  }
+
+  .countdown-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    margin-bottom: 2.5rem;
+    opacity: 0.8;
+  }
+
+  .countdown-grid {
+    display: flex;
+    justify-content: center;
+    gap: 3.5rem;
+    flex-wrap: wrap;
+  }
+
+  .countdown-unit { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+
+  .countdown-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 7vw, 5rem);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--blush-light);
+  }
+
+  .countdown-unit-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.48rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(242,214,217,0.4);
+  }
+
+  /* ── SECTIONS SHARED ───────────────────────── */
+  section { padding: 7rem 2rem; }
+
+  .section-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 300;
+    text-align: center;
+    color: var(--burgundy-deep);
+    margin-bottom: 1rem;
+    line-height: 1.15;
+  }
+
+  .section-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1.5rem auto 3.5rem;
+  }
+  .section-rule span { display: block; width: 50px; height: 1px; background: var(--rule); }
+  .section-rule svg { width: 14px; height: 14px; fill: var(--blush-mid); }
+
+  /* ── OUR STORY ─────────────────────────────── */
+  #story { background: var(--blush-light); }
+
+  .story-grid {
+    max-width: 960px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    gap: 0 3.5rem;
+    align-items: start;
+  }
+
+  .story-divider { background: var(--light-rule); }
+
+  .story-block h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    margin-bottom: 1.2rem;
+  }
+
+  .story-block p {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--mid);
+  }
+
+  /* ── DETAILS ───────────────────────────────── */
+  #details { background: var(--cream); }
+
+  .details-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2px;
+  }
+
+  .detail-card {
+    padding: 3rem 2rem;
+    text-align: center;
+    background: var(--blush-light);
+    border: 1px solid var(--light-rule);
+    transition: background 0.3s, transform 0.3s;
+  }
+  .detail-card:hover { background: #F7ECEE; transform: translateY(-2px); }
+
+  .detail-icon {
+    width: 30px; height: 30px;
+    margin: 0 auto 1.5rem;
+    stroke: var(--burgundy-mid);
+    fill: none;
+    stroke-width: 1.2;
+  }
+
+  .detail-card h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .detail-card p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--mid);
+  }
+
+  .detail-time {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    color: var(--burgundy-deep);
+    margin-top: 0.4rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── GALLERY ───────────────────────────────── */
+  #gallery { background: var(--burgundy-deep); padding-bottom: 5rem; }
+
+  #gallery .section-eyebrow { color: var(--gold-pale); opacity: 0.8; }
+  #gallery .section-title { color: var(--blush-light); }
+  #gallery .section-rule span { background: rgba(255,255,255,0.12); }
+  #gallery .section-rule svg { fill: rgba(242,214,217,0.3); }
+
+  .gallery-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: 210px;
+    gap: 4px;
+  }
+
+  .gallery-item { overflow: hidden; position: relative; cursor: pointer; }
+  .gallery-item:nth-child(1) { grid-column: span 5; grid-row: span 2; }
+  .gallery-item:nth-child(2) { grid-column: span 4; }
+  .gallery-item:nth-child(3) { grid-column: span 3; }
+  .gallery-item:nth-child(4) { grid-column: span 4; }
+  .gallery-item:nth-child(5) { grid-column: span 3; }
+  .gallery-item:nth-child(6) { grid-column: span 4; grid-row: span 2; }
+  .gallery-item:nth-child(7) { grid-column: span 4; grid-row: span 2; }
+  .gallery-item:nth-child(8) { grid-column: span 4; grid-row: span 2; }
+
+  .gallery-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: sepia(8%) saturate(90%);
+    transition: transform 0.6s ease, filter 0.4s ease;
+  }
+  .gallery-item:hover img { transform: scale(1.05); filter: sepia(0%) saturate(105%); }
+
+  .gallery-ph {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #3d1a24 0%, #521f2f 50%, #3d1a24 100%);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.4s;
+  }
+  .gallery-item:hover .gallery-ph { background: linear-gradient(135deg, #4a2030 0%, #602538 50%, #4a2030 100%); }
+  .gallery-ph span {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: rgba(201,169,110,0.35);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── REGISTRY ──────────────────────────────── */
+  #registry { background: var(--cream-warm); }
+
+  .registry-grid {
+    max-width: 820px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .registry-card {
+    border: 1px solid var(--light-rule);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    background: var(--cream);
+    text-decoration: none;
+    display: block;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .registry-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(to right, transparent, var(--burgundy-mid), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+  .registry-card:hover { border-color: var(--blush-mid); transform: translateY(-3px); }
+  .registry-card:hover::before { transform: scaleX(1); }
+
+  .registry-card h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--burgundy-deep);
+    margin-bottom: 0.8rem;
+  }
+  .registry-card p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--mid);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+  .registry-link {
+    font-family: 'Cinzel', serif;
+    font-size: 0.52rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: color 0.3s;
+  }
+  .registry-link::after { content: '→'; font-family: serif; font-size: 0.9rem; transition: transform 0.3s; }
+  .registry-card:hover .registry-link::after { transform: translateX(4px); }
+
+  /* ── TRAVEL ────────────────────────────────── */
+  #travel { background: var(--blush-light); }
+
+  .travel-grid {
+    max-width: 880px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .travel-card {
+    border: 1px solid var(--light-rule);
+    padding: 2.5rem;
+    background: var(--cream);
+  }
+  .travel-card h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    margin-bottom: 1.2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--light-rule);
+  }
+  .travel-card p {
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    line-height: 1.85;
+    color: var(--mid);
+  }
+  .travel-card a { color: var(--burgundy); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.3s; }
+  .travel-card a:hover { border-color: var(--burgundy); }
+
+  /* ── RSVP ──────────────────────────────────── */
+  #rsvp { background: var(--burgundy-deep); text-align: center; }
+  #rsvp .section-eyebrow { color: var(--gold-pale); opacity: 0.8; }
+  #rsvp .section-title { color: var(--blush-light); }
+  #rsvp .section-rule span { background: rgba(255,255,255,0.12); }
+  #rsvp .section-rule svg { fill: rgba(242,214,217,0.25); }
+
+  .rsvp-note {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: rgba(250,240,241,0.55);
+    max-width: 460px;
+    margin: 0 auto 3rem;
+    line-height: 1.85;
+  }
+
+  .rsvp-form {
+    max-width: 520px;
+    margin: 0 auto;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .rsvp-form input,
+  .rsvp-form select,
+  .rsvp-form textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.13);
+    color: var(--blush-light);
+    padding: 1rem 1.2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+    appearance: none;
+  }
+  .rsvp-form input::placeholder,
+  .rsvp-form textarea::placeholder { color: rgba(250,240,241,0.3); }
+  .rsvp-form input:focus,
+  .rsvp-form select:focus,
+  .rsvp-form textarea:focus { border-color: var(--blush-mid); }
+  .rsvp-form select option { background: var(--burgundy-deep); }
+  .rsvp-form textarea { resize: vertical; min-height: 100px; }
+
+  .btn-rsvp {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--burgundy-deep);
+    background: var(--gold-pale);
+    border: none;
+    padding: 1.1rem 3rem;
+    cursor: pointer;
+    transition: background 0.3s, letter-spacing 0.3s;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+  .btn-rsvp:hover { background: var(--gold-light); letter-spacing: 0.33em; }
+
+  /* ── WORDLE GAME ───────────────────────────── */
+  #game { background: var(--cream-warm); }
+
+  .game-container {
+    max-width: 420px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .game-intro {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--mid);
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+
+  /* grid */
+  .wordle-grid {
+    display: grid;
+    grid-template-rows: repeat(6, 1fr);
+    gap: 6px;
+    margin: 0 auto 2rem;
+    width: 220px;
+  }
+
+  .wordle-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+
+  .wordle-cell {
+    width: 48px; height: 48px;
+    border: 2px solid var(--light-rule);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--charcoal);
+    background: var(--cream);
+    transition: border-color 0.15s, transform 0.1s;
+    position: relative;
+    text-transform: uppercase;
+  }
+
+  .wordle-cell.filled { border-color: var(--burgundy-mid); transform: scale(1.04); }
+
+  /* flip animation */
+  .wordle-cell.flip {
+    animation: flipCell 0.5s ease forwards;
+  }
+
+  @keyframes flipCell {
+    0%   { transform: rotateX(0deg); }
+    50%  { transform: rotateX(-90deg); }
+    100% { transform: rotateX(0deg); }
+  }
+
+  .wordle-cell.correct  { background: var(--burgundy);    color: #fff; border-color: var(--burgundy); }
+  .wordle-cell.present  { background: var(--gold);         color: #fff; border-color: var(--gold); }
+  .wordle-cell.absent   { background: #8C7475;             color: #fff; border-color: #8C7475; }
+
+  /* shake */
+  .wordle-row.shake { animation: shakeRow 0.4s ease; }
+  @keyframes shakeRow {
+    0%,100% { transform: translateX(0); }
+    20%      { transform: translateX(-6px); }
+    40%      { transform: translateX(6px); }
+    60%      { transform: translateX(-4px); }
+    80%      { transform: translateX(4px); }
+  }
+
+  /* keyboard */
+  .wordle-keyboard { margin: 0 auto; max-width: 400px; }
+
+  .kb-row {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 5px;
+  }
+
+  .kb-key {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    background: var(--blush);
+    color: var(--charcoal);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    width: 34px; height: 40px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, color 0.2s, transform 0.1s;
+    user-select: none;
+  }
+
+  .kb-key:active { transform: scale(0.93); }
+  .kb-key.wide { width: 52px; font-size: 0.52rem; letter-spacing: 0.08em; }
+  .kb-key.correct { background: var(--burgundy); color: #fff; border-color: var(--burgundy); }
+  .kb-key.present { background: var(--gold); color: #fff; border-color: var(--gold); }
+  .kb-key.absent  { background: #C1ADB0; color: #fff; border-color: #C1ADB0; }
+
+  .game-message {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--burgundy);
+    min-height: 1.8rem;
+    margin-bottom: 1rem;
+    transition: opacity 0.4s;
+  }
+
+  .game-win-banner {
+    display: none;
+    background: var(--burgundy-deep);
+    color: var(--blush-light);
+    padding: 2rem 2.5rem;
+    margin-top: 1.5rem;
+    position: relative;
+  }
+  .game-win-banner.show { display: block; animation: fadeUp 0.6s ease forwards; }
+  .game-win-banner h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.7rem;
+    color: var(--gold-pale);
+    margin-bottom: 0.5rem;
+  }
+  .game-win-banner p {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.95rem;
+    color: rgba(250,240,241,0.6);
+    line-height: 1.7;
+  }
+
+  .btn-reset {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    background: transparent;
+    border: 1px solid var(--rule);
+    padding: 0.7rem 1.8rem;
+    cursor: pointer;
+    margin-top: 1.2rem;
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .btn-reset:hover { background: var(--blush); border-color: var(--blush-mid); }
+
+  /* ── FOOTER ────────────────────────────────── */
+  footer {
+    background: var(--burgundy-deep);
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding: 3.5rem 2rem;
+    text-align: center;
+  }
+  footer .monogram {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 2.5rem;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 1rem;
+  }
+  footer p {
+    font-family: 'Cinzel', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(250,240,241,0.22);
+    line-height: 2;
+  }
+
+  /* ── ANIMATIONS ────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── MOBILE NAV HAMBURGER ──────────────────── */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 950;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--burgundy);
+    transition: transform 0.3s, opacity 0.3s;
+    transform-origin: center;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* ── RESPONSIVE ────────────────────────────── */
+  @media (max-width: 700px) {
+
+    /* Safe area support for notched phones */
+    body { padding-bottom: env(safe-area-inset-bottom); }
+
+    /* Nav: monogram centered, hamburger right, links as dropdown */
+    nav {
+      position: fixed;
+      flex-direction: row;
+      justify-content: center;
+      padding: 0.85rem 3.5rem 0.85rem 1rem;
+      gap: 0;
+      min-height: 54px;
+    }
+
+    .nav-hamburger { display: flex; }
+
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0; right: 0;
+      background: rgba(250,246,238,0.98);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--light-rule);
+      flex-direction: column;
+      gap: 0;
+      padding: 0.5rem 0 1rem;
+      z-index: 899;
+    }
+
+    .nav-links.open { display: flex; }
+
+    .nav-links a {
+      padding: 0.85rem 2rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      width: 100%;
+      text-align: center;
+      border-bottom: 1px solid var(--light-rule);
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-links a:last-child { border-bottom: none; }
+
+    /* Hero */
+    #hero { padding: 7rem 1.5rem 4rem; }
+    .hc-tl,.hc-tr,.hc-bl,.hc-br { display: none; }
+    .hero-date { font-size: 0.55rem; letter-spacing: 0.18em; }
+
+    /* Countdown */
+    #countdown { padding: 3rem 1rem; }
+    .countdown-grid { gap: 1.8rem; }
+    .countdown-number { font-size: clamp(2.2rem, 12vw, 3.5rem); }
+
+    /* Sections */
+    section { padding: 5rem 1.25rem; }
+
+    /* Story */
+    .story-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .story-divider { display: none; }
+
+    /* Details */
+    .details-grid { grid-template-columns: 1fr 1fr; }
+    .detail-card { padding: 2rem 1rem; }
+
+    /* Gallery: single column on phones */
+    .gallery-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-auto-rows: 130px;
+      gap: 3px;
+    }
+    .gallery-item { grid-column: span 1 !important; grid-row: span 1 !important; }
+
+    /* Registry */
+    .registry-grid { grid-template-columns: 1fr; max-width: 380px !important; }
+
+    /* Travel */
+    .travel-grid { grid-template-columns: 1fr; }
+
+    /* RSVP */
+    .form-row { grid-template-columns: 1fr; }
+    .rsvp-form input,
+    .rsvp-form select,
+    .rsvp-form textarea {
+      font-size: 16px; /* prevents iOS zoom on focus */
+      padding: 0.9rem 1rem;
+    }
+    .btn-rsvp { font-size: 0.58rem; padding: 1rem 1.5rem; min-height: 52px; }
+
+    /* Wordle: tighter for small screens */
+    .wordle-grid { width: 196px; }
+    .wordle-cell { width: 44px; height: 44px; font-size: 1.15rem; }
+
+    .kb-key { width: 30px; height: 44px; font-size: 0.6rem; }
+    .kb-key.wide { width: 46px; }
+
+    /* Game container padding */
+    .game-container { padding: 0 0.5rem; }
+  }
+
+  /* Very small phones (≤380px) */
+  @media (max-width: 380px) {
+    .details-grid { grid-template-columns: 1fr; }
+    .wordle-grid { width: 180px; }
+    .wordle-cell { width: 40px; height: 40px; font-size: 1rem; }
+    .kb-key { width: 27px; height: 42px; font-size: 0.55rem; }
+    .kb-key.wide { width: 42px; }
+    .countdown-grid { gap: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <span class="monogram">J &amp; J</span>
+  <div class="nav-links" id="nav-links">
+    <a href="#story" onclick="closeNav()">Our Story</a>
+    <a href="#details" onclick="closeNav()">Details</a>
+    <a href="#registry" onclick="closeNav()">Registry</a>
+    <a href="#travel" onclick="closeNav()">Travel</a>
+    <a href="#game" onclick="closeNav()">Play</a>
+    <a href="#rsvp" onclick="closeNav()">RSVP</a>
+  </div>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hc-tl hero-corner"></div>
+  <div class="hc-tr hero-corner"></div>
+  <div class="hc-bl hero-corner"></div>
+  <div class="hc-br hero-corner"></div>
+
+  <div class="hero-rule"></div>
+  <h1 class="hero-names">
+    Jordan J. Adlam
+    <span class="hero-amp">&amp;</span>
+    Jacqueline M. Kenny
+  </h1>
+  <p class="hero-date">Friday, the Eighteenth of September — Two Thousand &amp; Twenty-Seven</p>
+  <div class="hero-ornament">
+    <span></span>
+    <svg viewBox="0 0 24 24"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+    <span></span>
+  </div>
+  <p class="hero-location">Detroit &amp; Bloomfield Hills, Michigan</p>
+</section>
+
+<!-- COUNTDOWN -->
+<div id="countdown">
+  <p class="countdown-label">Days Until We Say "I Do"</p>
+  <div class="countdown-grid">
+    <div class="countdown-unit">
+      <span class="countdown-number" id="cd-days">—</span>
+      <span class="countdown-unit-label">Days</span>
+    </div>
+    <div class="countdown-unit">
+      <span class="countdown-number" id="cd-hours">—</span>
+      <span class="countdown-unit-label">Hours</span>
+    </div>
+    <div class="countdown-unit">
+      <span class="countdown-number" id="cd-mins">—</span>
+      <span class="countdown-unit-label">Minutes</span>
+    </div>
+    <div class="countdown-unit">
+      <span class="countdown-number" id="cd-secs">—</span>
+      <span class="countdown-unit-label">Seconds</span>
+    </div>
+  </div>
+</div>
+
+<!-- OUR STORY -->
+<section id="story">
+  <p class="section-eyebrow reveal">A Love Story</p>
+  <h2 class="section-title reveal">How It Began</h2>
+  <div class="section-rule reveal">
+    <span></span>
+    <svg viewBox="0 0 24 24"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+    <span></span>
+  </div>
+  <div class="story-grid reveal">
+    <div class="story-block">
+      <h3>How We Met</h3>
+      <p>It was an afternoon tea at Martha Cook at the University of Michigan — the kind of event you almost skip, and then don't. Jordan and Jacqueline found each other across the room, and by the time the tea had gone cold, neither wanted to leave. It was, simply, love at first sight.</p>
+    </div>
+    <div class="story-divider"></div>
+    <div class="story-block">
+      <h3>The Proposal</h3>
+      <p>On Valentine's Day, 2026, Jordan led Jacqueline through the grand halls of the Metropolitan Museum of Art in New York City. Among centuries of art and quiet grandeur, he asked. She said yes. It was the most beautiful thing either of them had ever seen.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DETAILS -->
+<section id="details">
+  <p class="section-eyebrow reveal">The Celebration</p>
+  <h2 class="section-title reveal">Wedding Day Details</h2>
+  <div class="section-rule reveal">
+    <span></span>
+    <svg viewBox="0 0 24 24"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+    <span></span>
+  </div>
+  <div class="details-grid reveal">
+    <div class="detail-card">
+      <svg class="detail-icon" viewBox="0 0 24 24">
+        <rect x="3" y="4" width="18" height="18" rx="2"/>
+        <line x1="16" y1="2" x2="16" y2="6"/>
+        <line x1="8" y1="2" x2="8" y2="6"/>
+        <line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+      <h3>Date</h3>
+      <p>Friday<br><strong style="font-family:'Cinzel',serif;font-size:1rem;color:var(--burgundy-deep);">September 18, 2027</strong></p>
+    </div>
+    <div class="detail-card">
+      <svg class="detail-icon" viewBox="0 0 24 24">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+        <circle cx="12" cy="10" r="3"/>
+      </svg>
+      <h3>Ceremony</h3>
+      <p>Sweetest Heart of Mary<br><em style="font-size:0.88rem;">4800 Graceland Ave, Detroit</em><span class="detail-time">2:00 PM</span></p>
+    </div>
+    <div class="detail-card">
+      <svg class="detail-icon" viewBox="0 0 24 24">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+        <circle cx="12" cy="10" r="3"/>
+      </svg>
+      <h3>Reception</h3>
+      <p>Oakland Hills Country Club<br><em style="font-size:0.88rem;">Bloomfield Hills, Michigan</em><span class="detail-time">Cocktails 5:30 PM</span></p>
+    </div>
+    <div class="detail-card">
+      <svg class="detail-icon" viewBox="0 0 24 24">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+      <h3>Dress Code</h3>
+      <p>Black Tie<br><em style="font-size:0.88rem;color:var(--rule);">or Creative Black Tie</em></p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <p class="section-eyebrow reveal">Memories</p>
+  <h2 class="section-title reveal">Our Gallery</h2>
+  <div class="section-rule reveal">
+    <span></span>
+    <svg viewBox="0 0 24 24"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+    <span></span>
+  </div>
+  <div class="gallery-grid reveal">
+    <div class="gallery-item"><div class="gallery-ph"><span>Your Photo</span></div></div>
+    <div class="gallery-item"><div class="gallery-ph"><span>Your Photo</span></div></div>
+    <div class="gallery-item"><div class="gallery-ph"><span>Your Photo</span></div></div>
+    <div class="gallery-item"><div class="gallery-ph"><span>Your Photo</span></div></div>
+    <div class="gallery-item"><div class="gallery-ph"><span>Your Photo</span></div></div>
+    <div class="gallery-item"><div class="gallery-ph"><span>Your Photo</span></div></div>
+    <div class="gallery-item"><div class="gallery-ph"><span>Your Photo</span></div></div>
+    <div class="gallery-item"><div class="gallery-ph"><span>Your Photo</span></div></div>
+  </div>
+  <p style="text-align:center;margin-top:2rem;font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(242,214,217,0.2);font-size:0.88rem;">Swap the placeholder divs with &lt;img src="your-photo.jpg"&gt; tags</p>
+</section>
+
+<!-- REGISTRY -->
+<section id="registry">
+  <p class="section-eyebrow reveal">Gifts</p>
+  <h2 class="section-title reveal">The Registry</h2>
+  <div class="section-rule reveal">
+    <span></span>
+    <svg viewBox="0 0 24 24"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+    <span></span>
+  </div>
+  <p style="text-align:center;font-family:'EB Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--mid);max-width:460px;margin:0 auto 3rem;line-height:1.85;" class="reveal">
+    Your presence at our celebration is the greatest gift of all. For those who wish to honour us, we are registered at the following:
+  </p>
+  <div class="registry-grid reveal" style="max-width:560px;">
+    <a href="#" class="registry-card">
+      <h3>Registry One</h3>
+      <p>Add your registry<br>name &amp; description</p>
+      <span class="registry-link">View Registry</span>
+    </a>
+    <a href="#" class="registry-card">
+      <h3>Registry Two</h3>
+      <p>Add your registry<br>name &amp; description</p>
+      <span class="registry-link">View Registry</span>
+    </a>
+  </div>
+</section>
+
+<!-- TRAVEL -->
+<section id="travel">
+  <p class="section-eyebrow reveal">Getting Here</p>
+  <h2 class="section-title reveal">Travel &amp; Accommodations</h2>
+  <div class="section-rule reveal">
+    <span></span>
+    <svg viewBox="0 0 24 24"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+    <span></span>
+  </div>
+  <div class="travel-grid reveal">
+    <div class="travel-card">
+      <h3>Accommodations</h3>
+      <p>
+        <strong style="color:var(--charcoal);">The Townsend Hotel</strong><br>
+        100 Townsend Street, Birmingham, MI<br>
+        A room block has been reserved under <em>Adlam–Kenny</em>. Please mention the wedding when booking to receive the group rate.<br><br>
+        <a href="https://www.townsendhotel.com" target="_blank">townsendhotel.com →</a>
+      </p>
+    </div>
+    <div class="travel-card">
+      <h3>Getting There</h3>
+      <p>
+        <strong style="color:var(--charcoal);">Ceremony</strong><br>
+        Sweetest Heart of Mary is located at 4800 Graceland Ave in Detroit, approximately 25 minutes from the Townsend Hotel.<br><br>
+        <strong style="color:var(--charcoal);">Reception</strong><br>
+        Oakland Hills Country Club in Bloomfield Hills is approximately 15 minutes from the Townsend Hotel. Valet parking will be available.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- WORDLE GAME -->
+<section id="game">
+  <p class="section-eyebrow reveal">A Little Fun</p>
+  <h2 class="section-title reveal">Guess the Word</h2>
+  <div class="section-rule reveal">
+    <span></span>
+    <svg viewBox="0 0 24 24"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+    <span></span>
+  </div>
+
+  <div class="game-container reveal">
+    <p class="game-intro">
+      A four-letter word that brought us here. Can you guess it?<br>
+      <span style="font-size:0.85rem;color:var(--rule);">
+        🟥 Correct spot &nbsp;·&nbsp; 🟨 Wrong spot &nbsp;·&nbsp; ⬜ Not in word
+      </span>
+    </p>
+
+    <div class="wordle-grid" id="wordle-grid"></div>
+    <p class="game-message" id="game-message"></p>
+
+    <div class="wordle-keyboard" id="wordle-keyboard"></div>
+
+    <div class="game-win-banner" id="win-banner">
+      <h3>You guessed it — LOVE ♡</h3>
+      <p>That's the word that brought Jordan &amp; Jacqueline together at a tea party in Ann Arbor, and the reason you're all here to celebrate with them on September 18th, 2027.</p>
+    </div>
+
+    <button class="btn-reset" onclick="initGame()">Play Again</button>
+  </div>
+</section>
+
+<!-- RSVP -->
+<section id="rsvp">
+  <p class="section-eyebrow reveal">Kindly Reply</p>
+  <h2 class="section-title reveal">RSVP</h2>
+  <div class="section-rule reveal">
+    <span></span>
+    <svg viewBox="0 0 24 24"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+    <span></span>
+  </div>
+  <p class="rsvp-note reveal">Kindly respond by [Your RSVP Deadline — e.g. August 1, 2027].</p>
+  <div class="rsvp-form reveal">
+    <div class="form-row">
+      <input type="text" placeholder="First Name" />
+      <input type="text" placeholder="Last Name" />
+    </div>
+    <input type="email" placeholder="Email Address" />
+    <select>
+      <option value="" disabled selected>Will you be attending?</option>
+      <option>Joyfully accepts</option>
+      <option>Regretfully declines</option>
+    </select>
+    <select>
+      <option value="" disabled selected>Number of Guests</option>
+      <option>1 — Just myself</option>
+      <option>2 — Myself &amp; a guest</option>
+    </select>
+    <textarea placeholder="Dietary restrictions or a note for the couple…"></textarea>
+    <button class="btn-rsvp" onclick="handleRsvp(event)">Send Your Response</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="monogram">J &amp; J</span>
+  <p>Jordan J. Adlam &amp; Jacqueline M. Kenny · September 18, 2027 · Detroit &amp; Bloomfield Hills, Michigan</p>
+  <p style="margin-top:0.8rem;">Made with love, not a template.</p>
+</footer>
+
+<script>
+// ── COUNTDOWN ──────────────────────────────────────────
+// UPDATE THIS DATE to your actual wedding date/time
+const WEDDING_DATE = new Date('2027-09-18T14:00:00');
+
+function updateCountdown() {
+  const now = new Date();
+  const diff = WEDDING_DATE - now;
+  if (diff <= 0) {
+    ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => document.getElementById(id).textContent = '0');
+    return;
+  }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cd-days').textContent  = String(d).padStart(2,'0');
+  document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+  document.getElementById('cd-mins').textContent  = String(m).padStart(2,'0');
+  document.getElementById('cd-secs').textContent  = String(s).padStart(2,'0');
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// ── SCROLL REVEAL ───────────────────────────────────────
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// ── NAV SHADOW ──────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('main-nav').style.boxShadow =
+    window.scrollY > 50 ? '0 2px 24px rgba(107,39,55,0.09)' : 'none';
+});
+
+// ── RSVP ────────────────────────────────────────────────
+function handleRsvp(e) {
+  e.preventDefault();
+  const btn = e.target;
+  btn.textContent = 'Thank You — We Cannot Wait to Celebrate With You ♡';
+  btn.style.background = 'var(--burgundy-mid)';
+  btn.style.color = '#fff';
+  btn.style.letterSpacing = '0.1em';
+  btn.disabled = true;
+}
+
+// ── WORDLE GAME ─────────────────────────────────────────
+const ANSWER = 'LOVE';
+const MAX_GUESSES = 6;
+const VALID_WORDS = new Set([
+  'ABLE','ALSO','BACK','BALL','BAND','BANK','BASE','BATH','BEAR','BEEN',
+  'BELL','BEST','BIRD','BLOW','BLUE','BOAT','BODY','BOLD','BOND','BOOK',
+  'BORN','BOTH','BURN','CAKE','CALL','CAME','CARD','CARE','CASE','CAST',
+  'CITY','CLAD','CLAP','CLAY','CLUE','COAL','COAT','CODE','COIN','COLD',
+  'COME','COOK','COOL','COPE','CORE','CORN','COST','DARK','DATA','DAWN',
+  'DAYS','DEAD','DEAL','DEAR','DECK','DEEP','DEFT','DENY','DESK','DIAL',
+  'DIED','DIET','DINE','DIRT','DISH','DISK','DIVE','DOCK','DOME','DONE',
+  'DOOR','DOTE','DOVE','DOWN','DRAW','DREW','DROP','DRUM','DUAL','DUEL',
+  'DUNE','DUSK','DUST','EACH','EARN','EASE','EAST','EDGE','EMIT','EPIC',
+  'EVEN','EVER','EVIL','EXAM','FACE','FACT','FAIR','FAKE','FALL','FAME',
+  'FARE','FAST','FATE','FEAR','FEEL','FEET','FELL','FELT','FILE','FILL',
+  'FILM','FIND','FINE','FIRE','FIRM','FISH','FIST','FIVE','FLAG','FLAW',
+  'FLEW','FLIP','FLOW','FOAM','FOLD','FOLK','FOND','FONT','FOOD','FOOT',
+  'FORD','FORE','FORK','FORM','FORT','FOUR','FREE','FROM','FUEL','FULL',
+  'FUND','FUSE','GAIN','GALE','GAZE','GEAR','GENE','GIFT','GIVE','GLAD',
+  'GLOW','GLUE','GOAL','GOLD','GOLF','GONE','GOOD','GOWN','GRAY','GREW',
+  'GREY','GRID','GRIN','GRIP','GROW','GULF','GUST','GUTS','HAIL','HAIR',
+  'HALF','HALL','HALT','HAND','HANG','HARD','HARM','HATE','HAVE','HEAD',
+  'HEAL','HEAP','HEAR','HEAT','HEEL','HELD','HELM','HELP','HERE','HERO',
+  'HIGH','HILL','HINT','HOLD','HOLE','HOME','HOOD','HOOK','HOPE','HOST',
+  'HOUR','HUGE','HULL','HUNT','HURT','HYMN','IDEA','IDLE','INCH','INFO',
+  'INTO','IRIS','IRON','ISLE','ITEM','JAIL','JAZZ','JOIN','JOKE','JOLT',
+  'JUMP','JUST','KEEN','KEEP','KILL','KIND','KING','KISS','KITE','KNEW',
+  'KNOW','LACE','LAKE','LAMB','LAMP','LAND','LANE','LARK','LAST','LATE',
+  'LEAF','LEAK','LEAN','LEAP','LEFT','LEND','LESS','LIAR','LIFE','LIFT',
+  'LIKE','LIME','LINE','LINK','LION','LIST','LIVE','LOAD','LOAN','LOCK',
+  'LOFT','LONE','LONG','LORD','LORE','LOSS','LOST','LOUD','LOVE','LUCK',
+  'LURE','LUSH','LUST','MADE','MAID','MAIL','MAIN','MAKE','MALE','MALL',
+  'MANE','MANY','MARK','MARS','MASK','MASS','MATE','MAZE','MEAL','MEAN',
+  'MEET','MELT','MEMO','MESH','MILD','MILE','MILK','MILL','MIND','MINE',
+  'MINT','MISS','MIST','MODE','MOLD','MOON','MORE','MOSS','MOST','MOVE',
+  'MUCH','MUSE','MUST','NAME','NEAR','NEAT','NECK','NEED','NEST','NEWS',
+  'NEXT','NICE','NINE','NODE','NONE','NOON','NORM','NOTE','NOVA','OBEY',
+  'ODDS','ONCE','ONLY','OPEN','ORAL','OVER','PACE','PACK','PAGE','PAID',
+  'PAIN','PAIR','PALE','PALM','PARK','PART','PASS','PAST','PATH','PAVE',
+  'PEAK','PEAR','PEEL','PEER','PICK','PILE','PINE','PINK','PIPE','PLAN',
+  'PLAY','PLOT','PLOW','PLUM','PLUS','POEM','POET','POLE','POLL','POND',
+  'POOL','POOR','POPE','PORT','POUR','PRAY','PREY','PROP','PULL','PURE',
+  'PUSH','QUIZ','RACE','RACK','RAIN','RAKE','RANK','RATE','READ','REAL',
+  'REAP','REED','REEF','REEL','RELY','RENT','REST','RICE','RICH','RIDE',
+  'RING','RIOT','RISE','RISK','ROAD','ROAM','ROAR','ROBE','ROCK','RODE',
+  'ROLE','ROLL','ROOF','ROOT','ROPE','ROSE','RULE','RUSH','RUST','SAFE',
+  'SAGE','SAIL','SAKE','SALE','SALT','SAME','SAND','SANE','SAVE','SEAL',
+  'SEAM','SEED','SEEK','SELF','SELL','SEND','SENT','SHED','SHIP','SHOP',
+  'SHOT','SHOW','SIDE','SIGH','SIGN','SILK','SING','SINK','SITE','SIZE',
+  'SKIN','SKIP','SLAM','SLIM','SLIP','SLOW','SMUG','SNAP','SNOW','SOAR',
+  'SOFT','SOIL','SOLE','SOME','SONG','SOON','SORT','SOUL','SOUP','SOUR',
+  'SPAN','SPIN','SPOT','STAR','STAY','STEM','STEP','STOP','SUCH','SUIT',
+  'SURE','SURF','SWAM','SWAP','SWIM','TALE','TALL','TANK','TAPE','TASK',
+  'TEAM','TEAR','TELL','TEND','TENT','TERM','TEST','TEXT','THAN','THAT',
+  'THEM','THEN','THEY','THIN','THIS','THOU','THUS','TIDE','TIED','TIER',
+  'TILE','TILL','TIME','TINT','TINY','TIRE','TOAD','TOLD','TOLL','TOME',
+  'TONE','TOOL','TORE','TORN','TOSS','TOUR','TOWN','TRAP','TREE','TRIM',
+  'TRIP','TRUE','TUNE','TURF','TURN','TWIN','TYPE','UNIT','UPON','URGE',
+  'USED','VALE','VAST','VEIL','VEIN','VERY','VEST','VIEW','VINE','VOID',
+  'VOTE','WADE','WAGE','WAIT','WAKE','WALK','WALL','WAND','WANT','WARD',
+  'WARM','WARN','WARY','WAVE','WEAK','WEAL','WEAN','WEAR','WELD','WELL',
+  'WENT','WERE','WEST','WHAT','WHEN','WHIM','WHOM','WIDE','WILD','WILL',
+  'WIND','WINE','WING','WINK','WIRE','WISE','WISH','WITH','WOKE','WOMB',
+  'WOOD','WORD','WORE','WORK','WORM','WORN','WOVE','WRAP','WRIT','YARD',
+  'YARN','YEAR','YELL','YOUR','ZERO','ZEST','ZONE','ZOOM'
+]);
+
+let currentRow = 0;
+let currentCol = 0;
+let currentGuess = [];
+let gameOver = false;
+let keyStates = {};
+
+function initGame() {
+  currentRow = 0;
+  currentCol = 0;
+  currentGuess = [];
+  gameOver = false;
+  keyStates = {};
+  document.getElementById('game-message').textContent = '';
+  document.getElementById('win-banner').classList.remove('show');
+  buildGrid();
+  buildKeyboard();
+}
+
+function buildGrid() {
+  const grid = document.getElementById('wordle-grid');
+  grid.innerHTML = '';
+  for (let r = 0; r < MAX_GUESSES; r++) {
+    const row = document.createElement('div');
+    row.className = 'wordle-row';
+    row.id = `row-${r}`;
+    for (let c = 0; c < 4; c++) {
+      const cell = document.createElement('div');
+      cell.className = 'wordle-cell';
+      cell.id = `cell-${r}-${c}`;
+      row.appendChild(cell);
+    }
+    grid.appendChild(row);
+  }
+}
+
+function buildKeyboard() {
+  const kb = document.getElementById('wordle-keyboard');
+  kb.innerHTML = '';
+  const rows = [
+    ['Q','W','E','R','T','Y','U','I','O','P'],
+    ['A','S','D','F','G','H','J','K','L'],
+    ['ENTER','Z','X','C','V','B','N','M','⌫']
+  ];
+  rows.forEach(rowKeys => {
+    const row = document.createElement('div');
+    row.className = 'kb-row';
+    rowKeys.forEach(k => {
+      const btn = document.createElement('button');
+      btn.className = 'kb-key' + (k === 'ENTER' || k === '⌫' ? ' wide' : '');
+      btn.textContent = k;
+      btn.dataset.key = k;
+      btn.addEventListener('click', () => handleKey(k));
+      row.appendChild(btn);
+    });
+    kb.appendChild(row);
+  });
+}
+
+function handleKey(key) {
+  if (gameOver) return;
+  if (key === '⌫' || key === 'BACKSPACE') {
+    deleteLetter();
+  } else if (key === 'ENTER') {
+    submitGuess();
+  } else if (/^[A-Z]$/.test(key)) {
+    addLetter(key);
+  }
+}
+
+function addLetter(letter) {
+  if (currentCol >= 4) return;
+  currentGuess.push(letter);
+  const cell = document.getElementById(`cell-${currentRow}-${currentCol}`);
+  cell.textContent = letter;
+  cell.classList.add('filled');
+  currentCol++;
+}
+
+function deleteLetter() {
+  if (currentCol <= 0) return;
+  currentCol--;
+  currentGuess.pop();
+  const cell = document.getElementById(`cell-${currentRow}-${currentCol}`);
+  cell.textContent = '';
+  cell.classList.remove('filled');
+}
+
+function submitGuess() {
+  if (currentCol < 4) {
+    showMessage('Not enough letters');
+    shakeRow(currentRow);
+    return;
+  }
+  const word = currentGuess.join('');
+  if (!VALID_WORDS.has(word) && word !== ANSWER) {
+    showMessage('Not in word list');
+    shakeRow(currentRow);
+    return;
+  }
+
+  const result = evaluateGuess(word);
+  revealRow(currentRow, result, word);
+}
+
+function evaluateGuess(word) {
+  const result = Array(4).fill('absent');
+  const answerArr = ANSWER.split('');
+  const guessArr = word.split('');
+  const answerCopy = [...answerArr];
+
+  // mark correct
+  guessArr.forEach((l, i) => {
+    if (l === answerCopy[i]) {
+      result[i] = 'correct';
+      answerCopy[i] = null;
+    }
+  });
+  // mark present
+  guessArr.forEach((l, i) => {
+    if (result[i] === 'correct') return;
+    const idx = answerCopy.indexOf(l);
+    if (idx !== -1) {
+      result[i] = 'present';
+      answerCopy[idx] = null;
+    }
+  });
+  return result;
+}
+
+function revealRow(row, result, word) {
+  const cells = document.querySelectorAll(`#row-${row} .wordle-cell`);
+  cells.forEach((cell, i) => {
+    const delay = i * 320;
+    setTimeout(() => {
+      cell.classList.add('flip');
+      setTimeout(() => {
+        cell.classList.add(result[i]);
+        cell.classList.remove('filled');
+        updateKeyState(word[i], result[i]);
+      }, 250);
+    }, delay);
+  });
+
+  const totalDelay = 4 * 320 + 100;
+  setTimeout(() => {
+    if (word === ANSWER) {
+      gameOver = true;
+      showMessage('');
+      document.getElementById('win-banner').classList.add('show');
+    } else {
+      currentRow++;
+      currentCol = 0;
+      currentGuess = [];
+      if (currentRow >= MAX_GUESSES) {
+        gameOver = true;
+        showMessage(`The word was LOVE ♡`);
+      }
+    }
+  }, totalDelay);
+}
+
+function updateKeyState(letter, state) {
+  const priority = { correct: 3, present: 2, absent: 1 };
+  if (!keyStates[letter] || priority[state] > priority[keyStates[letter]]) {
+    keyStates[letter] = state;
+  }
+  document.querySelectorAll(`.kb-key`).forEach(btn => {
+    if (btn.dataset.key === letter) {
+      btn.className = 'kb-key' + (btn.textContent === 'ENTER' || btn.textContent === '⌫' ? ' wide' : '');
+      btn.classList.add(keyStates[letter]);
+    }
+  });
+}
+
+function shakeRow(row) {
+  const r = document.getElementById(`row-${row}`);
+  r.classList.add('shake');
+  setTimeout(() => r.classList.remove('shake'), 500);
+}
+
+function showMessage(msg) {
+  const el = document.getElementById('game-message');
+  el.textContent = msg;
+  el.style.opacity = '1';
+  if (msg) {
+    setTimeout(() => { el.style.opacity = '0'; }, 2000);
+  }
+}
+
+// Physical keyboard
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.key === 'Backspace') handleKey('BACKSPACE');
+  else if (e.key === 'Enter') handleKey('ENTER');
+  else if (/^[a-zA-Z]$/.test(e.key)) handleKey(e.key.toUpperCase());
+});
+
+// ── HAMBURGER NAV ───────────────────────────────────────
+function toggleNav() {
+  const links = document.getElementById('nav-links');
+  const btn   = document.getElementById('nav-hamburger');
+  links.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+function closeNav() {
+  document.getElementById('nav-links').classList.remove('open');
+  document.getElementById('nav-hamburger').classList.remove('open');
+}
+
+// Close nav if user taps outside
+document.addEventListener('click', e => {
+  const nav = document.getElementById('main-nav');
+  if (!nav.contains(e.target)) closeNav();
+});
+
+// Init
+initGame();
+</script>
+</body>
+</html>
