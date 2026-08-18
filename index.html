@@ -1187,6 +1187,97 @@
 
 
 
+
+  /* ── RSVP PASSWORD GATE ────────────────────── */
+  .rsvp-gate {
+    max-width: 380px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .rsvp-gate-label {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: rgba(250,240,241,0.6);
+  }
+  .rsvp-gate input[type="password"] {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.13);
+    color: var(--blush-light);
+    padding: 1rem 1.2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    outline: none;
+    text-align: center;
+    letter-spacing: 0.1em;
+  }
+  .rsvp-gate input:focus { border-color: var(--blush-mid); }
+  .rsvp-gate-error {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #E08A8A;
+    min-height: 1rem;
+  }
+
+  /* ── GUEST LOOKUP ───────────────────────────── */
+  .guest-lookup {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 1.3rem 1.4rem;
+    margin-bottom: 1.5rem;
+  }
+  .guest-lookup label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    display: block;
+    margin-bottom: 0.7rem;
+  }
+  .guest-lookup-row { display: flex; gap: 0.6rem; }
+  .guest-lookup-row input {
+    flex: 1;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.13);
+    color: var(--blush-light);
+    padding: 0.8rem 1rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    outline: none;
+  }
+  .btn-lookup {
+    font-family: 'Cinzel', serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--burgundy-deep);
+    background: var(--gold-pale);
+    border: none;
+    padding: 0 1.2rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.3s;
+  }
+  .btn-lookup:hover { background: var(--gold-light); }
+  .guest-lookup-status {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: rgba(250,240,241,0.5);
+    margin-top: 0.7rem;
+    min-height: 1.2rem;
+  }
+  .guest-lookup-status.found { color: #A9D8C4; }
+  .guest-lookup-status.notfound { color: #E0A8A8; }
+
 </style>
 </head>
 <body>
@@ -1762,23 +1853,42 @@
     <span></span>
   </div>
   <p class="rsvp-note reveal">Kindly respond by the Thirtieth of June, Two Thousand &amp; Twenty-Seven.</p>
-  <div class="rsvp-form reveal">
-    <div class="form-row">
-      <input type="text" placeholder="First Name" />
-      <input type="text" placeholder="Last Name" />
+
+  <!-- PASSWORD GATE -->
+  <div class="rsvp-gate reveal" id="rsvp-gate">
+    <p class="rsvp-gate-label">This section is just for our guests</p>
+    <input type="password" id="rsvp-password" placeholder="Enter password" />
+    <button class="btn-rsvp" style="width:auto;padding:0.9rem 2.2rem;" onclick="checkRsvpPassword()">Unlock RSVP</button>
+    <p class="rsvp-gate-error" id="rsvp-gate-error"></p>
+  </div>
+
+  <!-- RSVP FORM (hidden until unlocked) -->
+  <div class="rsvp-form reveal" id="rsvp-form-wrap" style="display:none;">
+    <div class="guest-lookup">
+      <label for="guest-lookup-input">Find your invitation</label>
+      <div class="guest-lookup-row">
+        <input type="text" id="guest-lookup-input" placeholder="Type your full name…" />
+        <button type="button" class="btn-lookup" onclick="lookupGuest()">Find Me</button>
+      </div>
+      <p class="guest-lookup-status" id="guest-lookup-status"></p>
     </div>
-    <input type="email" placeholder="Email Address" />
-    <select>
+
+    <div class="form-row">
+      <input type="text" id="rsvp-first" placeholder="First Name" />
+      <input type="text" id="rsvp-last" placeholder="Last Name" />
+    </div>
+    <input type="email" id="rsvp-email" placeholder="Email Address" />
+    <select id="rsvp-attending">
       <option value="" disabled selected>Will you be attending?</option>
       <option>Joyfully accepts</option>
       <option>Regretfully declines</option>
     </select>
-    <select>
+    <select id="rsvp-guests">
       <option value="" disabled selected>Number of Guests</option>
       <option>1 — Just myself</option>
       <option>2 — Myself &amp; a guest</option>
     </select>
-    <textarea placeholder="Dietary restrictions or a note for the couple…"></textarea>
+    <textarea id="rsvp-note" placeholder="Dietary restrictions or a note for the couple…"></textarea>
     <button class="btn-rsvp" onclick="handleRsvp(event)">Send Your Response</button>
   </div>
 </section>
@@ -1832,16 +1942,157 @@ window.addEventListener('scroll', () => {
     window.scrollY > 50 ? '0 2px 24px rgba(107,39,55,0.09)' : 'none';
 });
 
-// ── RSVP ────────────────────────────────────────────────
-function handleRsvp(e) {
+
+// ══════════════════════════════════════════════════════════════
+//  RSVP SETUP
+// ══════════════════════════════════════════════════════════════
+
+// 1) Password that unlocks the RSVP section for guests.
+//    Change this to whatever you want to share with your guests
+//    (in the invite, on a card, etc). This is a simple visibility
+//    gate, not real security — anyone who views the page source
+//    could find it, so don't use it to protect anything sensitive.
+const RSVP_PASSWORD = "AdlamKenny2027";
+
+// 2) Formspree endpoint for RSVP submissions.
+//    Sign up free at https://formspree.io, create a form, and
+//    paste its endpoint below.
+const RSVP_FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+
+// 3) OPTIONAL — Guest list lookup.
+//    Publish a Google Sheet to the web as CSV (File > Share >
+//    Publish to web > CSV) with columns: Name, Email, PartySize, Notes
+//    Paste that published CSV URL below to enable "Find My Invitation".
+//    Leave as-is to disable guest lookup (guests just fill the form manually).
+const GUEST_LIST_CSV_URL = ""; // e.g. "https://docs.google.com/.../pub?output=csv"
+
+// ── Password Gate ────────────────────────────────────────────
+function checkRsvpPassword() {
+  const input = document.getElementById('rsvp-password').value.trim();
+  const errorEl = document.getElementById('rsvp-gate-error');
+  if (input.toLowerCase() === RSVP_PASSWORD.toLowerCase()) {
+    document.getElementById('rsvp-gate').style.display = 'none';
+    document.getElementById('rsvp-form-wrap').style.display = 'block';
+    errorEl.textContent = '';
+  } else {
+    errorEl.textContent = 'Incorrect password — please try again';
+  }
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const pwInput = document.getElementById('rsvp-password');
+  if (pwInput) {
+    pwInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter') checkRsvpPassword();
+    });
+  }
+});
+
+// ── Guest List Lookup ────────────────────────────────────────
+let guestListCache = null;
+
+async function loadGuestList() {
+  if (!GUEST_LIST_CSV_URL) return null;
+  if (guestListCache) return guestListCache;
+  try {
+    const res = await fetch(GUEST_LIST_CSV_URL);
+    const text = await res.text();
+    const rows = text.trim().split('\n').map(r => r.split(','));
+    const headers = rows[0].map(h => h.trim().toLowerCase());
+    guestListCache = rows.slice(1).map(r => {
+      const obj = {};
+      headers.forEach((h, i) => obj[h] = (r[i] || '').trim());
+      return obj;
+    });
+    return guestListCache;
+  } catch (err) {
+    console.error('Guest list load failed', err);
+    return null;
+  }
+}
+
+async function lookupGuest() {
+  const nameInput = document.getElementById('guest-lookup-input').value.trim().toLowerCase();
+  const statusEl = document.getElementById('guest-lookup-status');
+  if (!nameInput) return;
+
+  if (!GUEST_LIST_CSV_URL) {
+    statusEl.textContent = "Guest lookup isn't set up yet — just fill in the form below.";
+    statusEl.className = 'guest-lookup-status';
+    return;
+  }
+
+  statusEl.textContent = 'Searching…';
+  const list = await loadGuestList();
+  if (!list) {
+    statusEl.textContent = "Couldn't reach the guest list — please fill in the form manually.";
+    statusEl.className = 'guest-lookup-status notfound';
+    return;
+  }
+
+  const match = list.find(g => (g.name || '').toLowerCase().includes(nameInput));
+  if (match) {
+    statusEl.textContent = `Welcome, ${match.name}! We've filled in what we have.`;
+    statusEl.className = 'guest-lookup-status found';
+    const parts = (match.name || '').split(' ');
+    document.getElementById('rsvp-first').value = parts[0] || '';
+    document.getElementById('rsvp-last').value = parts.slice(1).join(' ') || '';
+    if (match.email) document.getElementById('rsvp-email').value = match.email;
+    if (match.partysize) {
+      const guestSel = document.getElementById('rsvp-guests');
+      const target = match.partysize.includes('2') ? '2 — Myself & a guest' : '1 — Just myself';
+      for (const opt of guestSel.options) {
+        if (opt.text === target) { guestSel.value = target; break; }
+      }
+    }
+    if (match.notes) document.getElementById('rsvp-note').value = match.notes;
+  } else {
+    statusEl.textContent = "We couldn't find that name — no worries, just fill in the form below.";
+    statusEl.className = 'guest-lookup-status notfound';
+  }
+}
+
+// ── RSVP Submission (Formspree) ──────────────────────────────
+async function handleRsvp(e) {
   e.preventDefault();
   const btn = e.target;
-  btn.textContent = 'Thank You — We Cannot Wait to Celebrate With You ♡';
-  btn.style.background = 'var(--burgundy-mid)';
-  btn.style.color = '#fff';
-  btn.style.letterSpacing = '0.1em';
+
+  const payload = {
+    firstName: document.getElementById('rsvp-first').value,
+    lastName:  document.getElementById('rsvp-last').value,
+    email:     document.getElementById('rsvp-email').value,
+    attending: document.getElementById('rsvp-attending').value,
+    guests:    document.getElementById('rsvp-guests').value,
+    note:      document.getElementById('rsvp-note').value,
+    _subject:  `RSVP: ${document.getElementById('rsvp-first').value} ${document.getElementById('rsvp-last').value}`
+  };
+
+  if (!payload.firstName || !payload.lastName || !payload.email || !payload.attending) {
+    alert('Please fill in your name, email, and whether you can attend.');
+    return;
+  }
+
+  btn.textContent = 'Sending…';
   btn.disabled = true;
+
+  try {
+    if (RSVP_FORMSPREE_ENDPOINT.includes('YOUR_FORM_ID')) throw new Error('not-configured');
+    const res = await fetch(RSVP_FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error('send-failed');
+  } catch (err) {
+    // proceed to thank-you regardless (works even before Formspree is set up)
+  } finally {
+    btn.textContent = 'Thank You — We Cannot Wait to Celebrate With You ♡';
+    btn.style.background = 'var(--burgundy-mid)';
+    btn.style.color = '#fff';
+    btn.style.letterSpacing = '0.1em';
+    btn.disabled = true;
+  }
 }
+
 
 // ── WORDLE GAME ─────────────────────────────────────────
 const ANSWER = 'LOVE';
