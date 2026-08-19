@@ -1240,6 +1240,84 @@
   .guest-lookup-status.found { color: #A9D8C4; }
   .guest-lookup-status.notfound { color: #E0A8A8; }
 
+  /* ── DYNAMIC GUEST COUNT SECTION ────────────── */
+  #guest-count-section {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 1.3rem 1.4rem;
+    margin-bottom: 1rem;
+  }
+  #guest-count-section label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    display: block;
+    margin-bottom: 0.7rem;
+  }
+  #guest-count-section select {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.13);
+    color: var(--blush-light);
+    padding: 0.85rem 1rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    outline: none;
+    margin-bottom: 0.9rem;
+  }
+  .additional-guest-row {
+    display: flex;
+    gap: 0.6rem;
+    margin-bottom: 0.7rem;
+    align-items: center;
+  }
+  .additional-guest-row input {
+    flex: 1;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.13);
+    color: var(--blush-light);
+    padding: 0.8rem 1rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    outline: none;
+  }
+  .btn-remove-guest {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: rgba(250,240,241,0.4);
+    background: none;
+    border: 1px solid rgba(255,255,255,0.13);
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: color 0.3s, border-color 0.3s;
+  }
+  .btn-remove-guest:hover { color: #E0A8A8; border-color: #E0A8A8; }
+  .btn-add-guest {
+    font-family: 'Cinzel', serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    background: none;
+    border: 1px dashed rgba(255,255,255,0.25);
+    padding: 0.7rem 1rem;
+    cursor: pointer;
+    width: 100%;
+    transition: border-color 0.3s, color 0.3s;
+  }
+  .btn-add-guest:hover { border-color: var(--gold-pale); color: var(--gold-light); }
+  .guest-count-note {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: rgba(250,240,241,0.5);
+    margin-bottom: 0.9rem;
+  }
+
 </style>
 </head>
 <body>
@@ -1909,11 +1987,11 @@
       <option>Joyfully accepts</option>
       <option>Regretfully declines</option>
     </select>
-    <select id="rsvp-guests">
-      <option value="" disabled selected>Number of Guests</option>
-      <option>1 — Just myself</option>
-      <option>2 — Myself &amp; a guest</option>
-    </select>
+
+    <!-- Number of Guests — only appears for parties larger than 1, -->
+    <!-- shape depends on the party size found via guest lookup     -->
+    <div id="guest-count-section" style="display:none;"></div>
+
     <textarea id="rsvp-note" placeholder="Dietary restrictions or a note for the couple…"></textarea>
     <button class="btn-rsvp" onclick="handleRsvp(event)">Send Your Response</button>
   </div>
@@ -1996,12 +2074,14 @@ function escapeHtml(str) {
 // ── Guest List Lookup (server-validated) ──────────────────────
 let guestVerified = false;
 let verifiedGuestRecord = null;
+let additionalGuestCount = 0; // how many extra name fields are currently rendered
 
 async function lookupGuest() {
   const nameInputRaw = document.getElementById('guest-lookup-input').value.trim();
   const statusEl = document.getElementById('guest-lookup-status');
   guestVerified = false;
   verifiedGuestRecord = null;
+  clearGuestCountSection();
 
   if (!nameInputRaw) return;
 
@@ -2029,13 +2109,8 @@ async function lookupGuest() {
       document.getElementById('rsvp-first').value = parts[0] || '';
       document.getElementById('rsvp-last').value = parts.slice(1).join(' ') || '';
       if (data.email) document.getElementById('rsvp-email').value = data.email;
-      if (data.partySize) {
-        const guestSel = document.getElementById('rsvp-guests');
-        const target = String(data.partySize).includes('2') ? '2 — Myself & a guest' : '1 — Just myself';
-        for (const opt of guestSel.options) {
-          if (opt.text === target) { guestSel.value = target; break; }
-        }
-      }
+
+      renderGuestCountSection(data.partySize);
     } else {
       statusEl.textContent = "We couldn't find that name on our guest list. If you believe this is an error, please reach out to us directly.";
       statusEl.className = 'guest-lookup-status notfound';
@@ -2045,6 +2120,101 @@ async function lookupGuest() {
     statusEl.textContent = "We couldn't reach the guest list right now — please try again shortly.";
     statusEl.className = 'guest-lookup-status notfound';
   }
+}
+
+// ── Dynamic "Number of Guests" section ─────────────────────────
+// Party size 1 (or unspecified)  → section stays hidden entirely
+// Party size 2                   → a count dropdown + one field for the plus-one's name
+// Party size "3+" (open-ended)   → an "add another guest" flow, no fixed cap from the sheet
+const MAX_ADDITIONAL_GUESTS = 10; // sanity ceiling for the "3+" open-ended case
+
+function clearGuestCountSection() {
+  const section = document.getElementById('guest-count-section');
+  section.innerHTML = '';
+  section.style.display = 'none';
+  additionalGuestCount = 0;
+}
+
+function renderGuestCountSection(partySizeRaw) {
+  const section = document.getElementById('guest-count-section');
+  const partySize = String(partySizeRaw || '').trim();
+
+  // Party of 1 or unknown/blank — no extra guest UI needed at all
+  if (!partySize || partySize === '1') {
+    section.style.display = 'none';
+    return;
+  }
+
+  section.style.display = 'block';
+
+  const numericSize = parseInt(partySize, 10);
+  const isOpenEnded = partySize.includes('+') || isNaN(numericSize);
+
+  if (isOpenEnded) {
+    // "3+" case — open-ended, guest adds as many names as needed
+    section.innerHTML = `
+      <label>Who's Coming With You?</label>
+      <p class="guest-count-note">Your invitation allows for additional guests. Please add their names below.</p>
+      <div id="additional-guest-rows"></div>
+      <button type="button" class="btn-add-guest" id="btn-add-guest-row">+ Add a Guest</button>
+    `;
+    document.getElementById('btn-add-guest-row').addEventListener('click', addGuestRow);
+    addGuestRow(); // start with one field
+  } else {
+    // Exact known party size (e.g. 2, 3, 4) — dropdown to choose how many
+    // are actually coming, then that many name fields appear
+    let options = '<option value="" disabled selected>How many will attend?</option>';
+    for (let i = 1; i <= numericSize; i++) {
+      options += `<option value="${i}">${i} — ${i === 1 ? 'Just myself' : `Myself & ${i - 1} guest${i - 1 > 1 ? 's' : ''}`}</option>`;
+    }
+    section.innerHTML = `
+      <label>Number of Guests</label>
+      <select id="rsvp-guest-count">${options}</select>
+      <div id="additional-guest-rows"></div>
+    `;
+    document.getElementById('rsvp-guest-count').addEventListener('change', (e) => {
+      const chosen = parseInt(e.target.value, 10);
+      rebuildGuestRows(chosen - 1); // minus the main guest themselves
+    });
+  }
+}
+
+function addGuestRow() {
+  if (additionalGuestCount >= MAX_ADDITIONAL_GUESTS) return;
+  additionalGuestCount++;
+  const rowsWrap = document.getElementById('additional-guest-rows');
+  const row = document.createElement('div');
+  row.className = 'additional-guest-row';
+  row.innerHTML = `
+    <input type="text" class="additional-guest-name" placeholder="Guest ${additionalGuestCount} full name" />
+    <button type="button" class="btn-remove-guest" aria-label="Remove">&times;</button>
+  `;
+  row.querySelector('.btn-remove-guest').addEventListener('click', () => {
+    row.remove();
+    additionalGuestCount--;
+    renumberGuestPlaceholders();
+  });
+  rowsWrap.appendChild(row);
+}
+
+function rebuildGuestRows(count) {
+  const rowsWrap = document.getElementById('additional-guest-rows');
+  rowsWrap.innerHTML = '';
+  additionalGuestCount = 0;
+  for (let i = 0; i < count; i++) addGuestRow();
+}
+
+function renumberGuestPlaceholders() {
+  const inputs = document.querySelectorAll('.additional-guest-name');
+  inputs.forEach((input, i) => {
+    input.placeholder = `Guest ${i + 1} full name`;
+  });
+}
+
+function collectAdditionalGuestNames() {
+  return Array.from(document.querySelectorAll('.additional-guest-name'))
+    .map(i => i.value.trim())
+    .filter(Boolean);
 }
 
 // ── RSVP Submission (Formspree) ──────────────────────────────
@@ -2060,12 +2230,16 @@ async function handleRsvp(e) {
     return;
   }
 
+  const additionalGuests = collectAdditionalGuestNames();
+  const totalGuestCount = 1 + additionalGuests.length;
+
   const payload = {
     firstName: document.getElementById('rsvp-first').value.trim(),
     lastName:  document.getElementById('rsvp-last').value.trim(),
     email:     document.getElementById('rsvp-email').value.trim(),
     attending: document.getElementById('rsvp-attending').value,
-    guests:    document.getElementById('rsvp-guests').value,
+    totalGuests: totalGuestCount,
+    additionalGuestNames: additionalGuests.join(', '),
     note:      document.getElementById('rsvp-note').value.trim(),
     _subject:  `RSVP: ${document.getElementById('rsvp-first').value.trim()} ${document.getElementById('rsvp-last').value.trim()}`
   };
