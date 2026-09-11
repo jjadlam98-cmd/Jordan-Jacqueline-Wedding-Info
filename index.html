@@ -6,6 +6,29 @@
 <meta name="theme-color" content="#4E1B28"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+<!-- ══════════════════════════════════════════════════════════
+     GOOGLE SEARCH CONSOLE VERIFICATION
+     To let people find this site by searching "Jordan Adlam and
+     Jacqueline Kenny wedding website":
+     1. Go to search.google.com/search-console
+     2. Add property → URL prefix → enter https://adlamkenny2027.wedding
+     3. Choose the "HTML tag" verification method
+     4. Copy the content="..." value it gives you and paste it below,
+        replacing PASTE_VERIFICATION_CODE_HERE
+     5. Re-upload this file, then click "Verify" in Search Console
+     6. In Search Console, use "URL Inspection" → "Request Indexing"
+        to speed up appearing in Google results
+     ══════════════════════════════════════════════════════════ -->
+<meta name="google-site-verification" content="pQKUK2LGVtaNlk67uXJEA5lvvFhJhFeMl63CVV4puHI" />
+
+<!-- SEO — helps the site appear in search results -->
+<meta name="description" content="The wedding website of Jacqueline M. Kenny and Jordan J. Adlam — September 18, 2027 in Detroit, Michigan. Find event details, travel, registry, and RSVP." />
+<meta name="keywords" content="Jordan Adlam Jacqueline Kenny wedding, Adlam Kenny wedding 2027, Kenny Adlam wedding Detroit" />
+<meta property="og:title" content="Jacqueline M. Kenny & Jordan J. Adlam — September 18, 2027" />
+<meta property="og:description" content="Join us in celebrating our wedding on September 18, 2027 in Detroit, Michigan." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://adlamkenny2027.wedding" />
 <title>Jacqueline M. Kenny & Jordan J. Adlam — September 18, 2027</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1185,6 +1208,116 @@
   .registry-card-feature h3 { color: #3B6B5E; }
   .registry-card-feature .registry-link { color: #4A7A6C; }
 
+  /* ── RALPH LAUREN REGISTRY CARD ────────────── */
+  .registry-card-rl {
+    background: linear-gradient(160deg, var(--cream) 0%, #F7F0EA 100%);
+    border-color: rgba(107,39,55,0.35);
+  }
+  .registry-card-rl:hover { border-color: var(--burgundy); }
+  .registry-card-rl::before {
+    background: linear-gradient(to right, transparent, var(--burgundy), transparent) !important;
+  }
+  .registry-card-rl h3 { color: var(--burgundy-deep); }
+  .registry-card-rl .registry-link { color: var(--burgundy); }
+
+  /* ── RALPH LAUREN SECTION ──────────────────── */
+  .rl-wrap {
+    max-width: 720px;
+    margin: 4.5rem auto 0;
+    scroll-margin-top: 80px;
+    text-align: center;
+  }
+  .rl-header { margin-bottom: 2.5rem; }
+  .rl-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    margin-bottom: 0.8rem;
+  }
+  .rl-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(2rem, 4.5vw, 2.8rem);
+    font-weight: 300;
+    color: var(--burgundy-deep);
+    margin-bottom: 1.2rem;
+  }
+  .rl-intro {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.08rem;
+    line-height: 1.85;
+    color: var(--mid);
+    max-width: 580px;
+    margin: 0 auto;
+  }
+  .rl-catalog-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--burgundy);
+    padding: 1.1rem 2rem;
+    text-decoration: none;
+    transition: background 0.3s, letter-spacing 0.3s;
+    margin-bottom: 3rem;
+  }
+  .rl-catalog-btn:hover { background: var(--burgundy-deep); letter-spacing: 0.2em; }
+  .rl-catalog-btn svg { width: 22px; height: 22px; }
+
+  .rl-contact {
+    border: 1px solid var(--light-rule);
+    background: var(--blush-light);
+    padding: 2.2rem 2rem;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .rl-contact-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+  .rl-contact-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.6rem;
+    color: var(--burgundy-deep);
+    margin-bottom: 0.4rem;
+  }
+  .rl-contact-role {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.98rem;
+    color: var(--mid);
+    margin-bottom: 1rem;
+  }
+  .rl-contact-line {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: var(--mid);
+  }
+  .rl-contact-line a {
+    color: var(--burgundy);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+  .rl-contact-line a:hover { border-color: var(--burgundy); }
+  .rl-divider { margin: 0 0.7rem; color: var(--rule); }
+
+  @media (max-width: 700px) {
+    .rl-contact-line { line-height: 2.2; }
+    .rl-divider { display: none; }
+    .rl-contact-line a { display: block; }
+  }
+
 
 
 
@@ -1432,7 +1565,7 @@
         <circle cx="12" cy="10" r="3"/>
       </svg>
       <h3>Ceremony</h3>
-      <p>Sweetest Heart of Mary<br><em style="font-size:0.88rem;">4800 Graceland Ave, Detroit</em><span class="detail-time">2:00 PM</span></p>
+      <p>Sweetest Heart of Mary<br><em style="font-size:0.88rem;">4440 Russell Street, Detroit, MI 48207</em><span class="detail-time">2:00 PM</span></p>
     </div>
     <div class="detail-card">
       <svg class="detail-icon" viewBox="0 0 24 24">
@@ -1447,7 +1580,7 @@
         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
       </svg>
       <h3>Dress Code</h3>
-      <p>Black Tie<br><em style="font-size:0.88rem;color:var(--rule);">or Creative Black Tie</em></p>
+      <p>Black Tie</p>
     </div>
   </div>
 </section>
@@ -1681,7 +1814,7 @@
     </a>
     <a href="https://www.williams-sonoma.com/registry/5qntlth2vp/registry-list.html" target="_blank" rel="noopener" class="registry-card">
       <h3>Williams-Sonoma</h3>
-      <p>Kitchen &amp; culinary<br>favourites</p>
+      <p>Kitchen &amp; culinary<br>favorites</p>
       <span class="registry-link">View Registry</span>
     </a>
     <a href="registry.html" class="registry-card registry-card-feature">
@@ -1689,6 +1822,41 @@
       <p>Our curated collection<br>of fine china &amp; crystal</p>
       <span class="registry-link">Browse &amp; Claim</span>
     </a>
+    <a href="#ralph-lauren" class="registry-card registry-card-rl">
+      <h3>Ralph Lauren Home</h3>
+      <p>Our curated Ralph Lauren<br>registry catalog</p>
+      <span class="registry-link">View Catalog</span>
+    </a>
+  </div>
+
+  <!-- RALPH LAUREN REGISTRY -->
+  <div id="ralph-lauren" class="rl-wrap reveal">
+    <div class="rl-header">
+      <p class="rl-eyebrow">A Curated Collection</p>
+      <h3 class="rl-title">Ralph Lauren Home</h3>
+      <p class="rl-intro">We've put together a Ralph Lauren Home registry catalog of glassware, serveware, décor, and bedding pieces we love. Browse the full catalog below, then reach out to our Ralph Lauren representative directly to purchase any piece — she'll have the most up-to-date availability.</p>
+    </div>
+
+    <a href="RL_Registry_Catalog.pdf" target="_blank" rel="noopener" class="rl-catalog-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="12" y1="18" x2="12" y2="12"/>
+        <polyline points="9 15 12 18 15 15"/>
+      </svg>
+      View the Full Registry Catalog (PDF)
+    </a>
+
+    <div class="rl-contact">
+      <p class="rl-contact-label">To Purchase, Please Contact</p>
+      <p class="rl-contact-name">Rebecca L. Berk</p>
+      <p class="rl-contact-role">Ralph Lauren Home Collection · 888 Madison</p>
+      <p class="rl-contact-line">
+        <a href="tel:+19175756031">(917) 575-6031</a>
+        <span class="rl-divider">·</span>
+        <a href="mailto:Rebecca.Berk@RalphLauren.com">Rebecca.Berk@RalphLauren.com</a>
+      </p>
+    </div>
   </div>
 
 </section>
@@ -1708,15 +1876,19 @@
       <p>
         <strong style="color:var(--charcoal);">The Townsend Hotel</strong><br>
         100 Townsend Street, Birmingham, MI<br>
-        A room block has been reserved under <em>Adlam–Kenny</em>. Please mention the wedding when booking to receive the group rate.<br><br>
-        <a href="https://www.townsendhotel.com" target="_blank">townsendhotel.com →</a>
+        A room block has been reserved under <em>Adlam–Kenny</em>. Please mention the wedding when booking to receive the group rate.<br>
+        <a href="https://www.townsendhotel.com" target="_blank">townsendhotel.com →</a><br><br>
+        <strong style="color:var(--charcoal);">The Kingsley</strong><br>
+        39475 Woodward Ave, Bloomfield Hills, MI<br>
+        A second block of rooms is also available. Shuttle service details to and from the venues will be shared here soon.<br>
+        <a href="https://www.thekingsleymi.com" target="_blank">thekingsleymi.com →</a>
       </p>
     </div>
     <div class="travel-card">
       <h3>Getting There</h3>
       <p>
         <strong style="color:var(--charcoal);">Ceremony</strong><br>
-        Sweetest Heart of Mary is located at 4800 Graceland Ave in Detroit, approximately 25 minutes from the Townsend Hotel.<br><br>
+        Sweetest Heart of Mary is located at 4440 Russell Street in Detroit, approximately 25 minutes from the Townsend Hotel. Parking is available in the back lot only, with the entrance off Canfield Avenue. Please arrive at least 15 minutes before the ceremony to allow ample time for seating.<br><br>
         <strong style="color:var(--charcoal);">Reception</strong><br>
         Oakland Hills Country Club in Bloomfield Hills is approximately 15 minutes from the Townsend Hotel. Valet parking will be available.
       </p>
@@ -2061,7 +2233,7 @@ const RSVP_FORMSPREE_ENDPOINT = "https://formspree.io/f/myegbopr";
 //    a yes/no match (plus safe fields like party size) — never the
 //    full guest list. See the setup guide for the Apps Script code
 //    to paste in and deploy.
-const GUEST_LIST_API_URL = "https://script.google.com/macros/s/AKfycbwWTQiOZp9km6K6v5WbiQaayINlN2eEbTJVF0BIYLTkBrdbLEgPxGz6huiSyvzbUJ9t/exec"; // e.g. "https://script.google.com/macros/s/XXXXX/exec"
+const GUEST_LIST_API_URL = ""; // e.g. "https://script.google.com/macros/s/XXXXX/exec"
 
 // Simple HTML-escaping so nothing typed into these fields can execute
 // as code if it's ever echoed back into the page (basic XSS hygiene).
@@ -2102,12 +2274,13 @@ async function lookupGuest() {
     if (data.match) {
       guestVerified = true;
       verifiedGuestRecord = data;
-      statusEl.textContent = `Welcome, ${escapeHtml(data.name)}! We've filled in what we have.`;
+      statusEl.innerHTML = `Found your invitation under <strong>${escapeHtml(data.name)}</strong>. Please enter your details below.`;
       statusEl.className = 'guest-lookup-status found';
 
-      const parts = (data.name || '').split(' ');
-      document.getElementById('rsvp-first').value = parts[0] || '';
-      document.getElementById('rsvp-last').value = parts.slice(1).join(' ') || '';
+      // We intentionally do NOT auto-fill first/last name from the household
+      // invitation (e.g. "Mr. and Mrs. Thomas Kenny"), since a single guest's
+      // real name may differ. We leave those fields for the guest to complete.
+      // Email is pre-filled only if we have one on file.
       if (data.email) document.getElementById('rsvp-email').value = data.email;
 
       renderGuestCountSection(data.partySize);
